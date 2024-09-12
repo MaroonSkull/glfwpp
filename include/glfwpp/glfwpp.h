@@ -66,15 +66,42 @@ namespace glfw
     }  // namespace impl
 
 #if GLFW_VERSION_MAJOR >= 3 && GLFW_VERSION_MINOR >= 3
+
+    enum class GlfwPlatform : int
+    {
+        Any     = GLFW_ANY_PLATFORM,
+        Win32   = GLFW_PLATFORM_WIN32,
+        Cocoa   = GLFW_PLATFORM_COCOA,
+// TODO: idk, is this is that one version, or was wayland available before?
+// Officialy it is available since 3.4, but unofficcially maybe wince 3.3.9?
+#if GLFW_VERSION_MINOR >= 4
+        Wayland = GLFW_PLATFORM_WAYLAND,
+#endif
+        X11     = GLFW_PLATFORM_X11,
+        Null    = GLFW_PLATFORM_NULL
+    };
+
     struct InitHints
     {
         bool cocoaChdirResources = true;
         bool cocoaMenubar = true;
+        GlfwPlatform platform = GlfwPlatform::Any;
 
         void apply() const
         {
             glfwInitHint(GLFW_COCOA_CHDIR_RESOURCES, cocoaChdirResources);
             glfwInitHint(GLFW_COCOA_MENUBAR, cocoaMenubar);
+
+            // Wayland support
+            if (platform == GlfwPlatform::Wayland) {
+#if GLFW_VERSION_MINOR >= 4
+                if (!glfwPlatformSupported(GLFW_PLATFORM_WAYLAND))
+                    throw PlatformError("GLFW was not built with Wayland support");
+#endif
+            }
+            else {
+                glfwInitHint(GLFW_PLATFORM, static_cast<int>(platform));
+            }
         }
     };
 #endif

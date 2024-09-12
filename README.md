@@ -1,13 +1,12 @@
 # GLFW C++ wrapper - glfwpp ![logo](logo.png)
 
-[![CMake](https://github.com/janekb04/glfwpp/workflows/CMake/badge.svg)](https://github.com/janekb04/glfwpp/actions?query=workflow%3ACMake)
-[![clang-format](https://github.com/janekb04/glfwpp/workflows/clang-format/badge.svg)](https://github.com/janekb04/glfwpp/actions?query=workflow%3Aclang-format)
-[![dependabot](https://badgen.net/github/dependabot/janekb04/glfwpp?icon=dependabot&label)](https://github.com/janekb04/glfwpp/network/updates)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/janekb04/glfwpp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/janekb04/glfwpp/alerts/)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/janekb04/glfwpp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/janekb04/glfwpp/context:cpp)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/69102e4c9b3744eea1fdd3a5758aee91)](https://www.codacy.com/gh/janekb04/glfwpp/dashboard?utm_source=github.com&utm_medium=referral&utm_content=janekb04/glfwpp&utm_campaign=Badge_Grade)
-[![CodeFactor](https://www.codefactor.io/repository/github/janekb04/glfwpp/badge/main)](https://www.codefactor.io/repository/github/janekb04/glfwpp/overview/main)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fjanekb04%2Fglfwpp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fjanekb04%2Fglfwpp?ref=badge_shield)
+[![CMake](https://github.com/MaroonSkull/glfwpp/workflows/CMake/badge.svg)](https://github.com/MaroonSkull/glfwpp/actions?query=workflow%3ACMake)
+[![clang-format](https://github.com/MaroonSkull/glfwpp/workflows/clang-format/badge.svg)](https://github.com/MaroonSkull/glfwpp/actions?query=workflow%3Aclang-format)
+[![dependabot](https://badgen.net/github/dependabot/MaroonSkull/glfwpp?icon=dependabot&label)](https://github.com/MaroonSkull/glfwpp/network/updates)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/MaroonSkull/glfwpp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/MaroonSkull/glfwpp/alerts/)
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/MaroonSkull/glfwpp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/MaroonSkull/glfwpp/context:cpp)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/69102e4c9b3744eea1fdd3a5758aee91)](https://www.codacy.com/gh/MaroonSkull/glfwpp/dashboard?utm_source=github.com&utm_medium=referral&utm_content=MaroonSkull/glfwpp&utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/MaroonSkull/glfwpp/badge/main)](https://www.codefactor.io/repository/github/MaroonSkull/glfwpp/overview/main)
 
 <p align="center">
   <img src="https://i.stack.imgur.com/cmt94.gif">
@@ -25,10 +24,10 @@ I like C++ and OOP, so when I find a C library, I immediately look for a wrapper
 
 <details><summary>:stopwatch: <b>Quick Start</b></summary><br />
 
-To use, just clone the repo recursively:
+To use, just clone the repo:
 
-```powershell
-git clone https://github.com/janekb04/glfwpp --recurse-submodules
+```bash
+git clone https://github.com/MaroonSkull/glfwpp
 ```
 
 Remember to install [the necessary GLFW dependencies](https://www.glfw.org/docs/latest/compile.html), if you're on Linux. Make sure to disable building the examples by setting the option `GLFWPP_BUILD_EXAMPLES` to `OFF` using `set(GLFWPP_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)` in your `CMakeLists.txt`, if you don't want them built, as they are built by default. If you don't disable them, you will also have to install [the Vulkan SDK](https://vulkan.lunarg.com).
@@ -56,7 +55,7 @@ int main()
 }
 ```
 
-You can also consult [`cmake.yml`](https://github.com/janekb04/glfwpp/blob/main/.github/workflows/cmake.yml) to see the complete installation and building process of GLFWPP, its dependencies and the examples on Ubuntu, macOS and Windows. Examples may be found in the `/examples` directory. Alternatively, just copy-paste the headers and include `glfwpp.h` (not recommended). 
+You can also consult [`cmake.yml`](https://github.com/MaroonSkull/glfwpp/blob/main/.github/workflows/cmake.yml) to see the complete installation and building process of GLFWPP, its dependencies and the examples on Ubuntu, macOS and Windows. Examples may be found in the `/examples` directory. Alternatively, just copy-paste the headers and include `glfwpp.h` (not recommended). 
 
 Note: To use functionality from `glfw3native.h`, `native.h` has to be included separately.
 
@@ -190,10 +189,4 @@ GLFWPP code and GLFW can be mixed with no issues as long as you mind these rules
 -   If GLFW is initialized with `glfwInit`, you can initialize it again with `glfw::GlfwLibrary`. All the created GLFW objects will remain in a valid and all state will be preserved except that the handlers error callback, monitor callback and joystick callback handlers will be intercepted by GLFWPP and to register your own handlers you will have to use the appropriate `glfw::XXXXevent`.
 -   Where applicable, `glfw::` objects provide conversion operation to and from the underlying `GLFWxxxx*` handles. However it must be noted that the conversion to the underlying handles retains the ownership of those handles. As such, for example, you must not `glfwDestroy` them. At the same time the constructors from handles take the ownership of the given handle and as such in this case you also must not `glfwDestroy` them yourself.
 
-</details>
-
-<details><summary>:balance_scale: <b>License</b></summary><br /> 
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fjanekb04%2Fglfwpp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fjanekb04%2Fglfwpp?ref=badge_large)
-  
 </details>
