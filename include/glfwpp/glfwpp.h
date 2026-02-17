@@ -65,7 +65,7 @@ namespace glfw
         }
     }  // namespace impl
 
-#if GLFW_VERSION_MAJOR >= 3 && GLFW_VERSION_MINOR >= 3
+#if GLFW_VERSION_MAJOR >= 3 && GLFW_VERSION_MINOR >= 4
 
     enum class GlfwPlatform : int
     {
