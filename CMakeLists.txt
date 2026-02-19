@@ -20,24 +20,28 @@ else()
     if(glfw3_FOUND)
         target_link_libraries(GLFWPP INTERFACE glfw)
     else()
-        # then try with pkg-config (in case cmake config files are missing for some reason)
-        find_package(PkgConfig REQUIRED)
-        pkg_check_modules(GLFW IMPORTED_TARGET glfw3)
-        if(GLFW_FOUND)
-            target_link_libraries(GLFWPP INTERFACE glfw)
-        else()
-            # then build from source if needed
-            include(FetchContent)
-            FetchContent_Declare(
-                glfw
-                GIT_REPOSITORY https://github.com/glfw/glfw.git
-                GIT_TAG 3.4)
-            set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-            set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-            set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-            FetchContent_MakeAvailable(glfw)
-            target_link_libraries(GLFWPP INTERFACE glfw)
+        # then try with pkg-config on Unix systems (not available on Windows)
+        if(UNIX)
+            find_package(PkgConfig)
+            if(PKG_CONFIG_EXECUTABLE)
+                pkg_check_modules(GLFW IMPORTED_TARGET glfw3)
+                if(GLFW_FOUND)
+                    target_link_libraries(GLFWPP INTERFACE glfw)
+                    return()
+                endif()
+            endif()
         endif()
+        # build from source if not found via cmake config or pkg-config
+        include(FetchContent)
+        FetchContent_Declare(
+            glfw
+            GIT_REPOSITORY https://github.com/glfw/glfw.git
+            GIT_TAG 3.4)
+        set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+        set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+        set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+        FetchContent_MakeAvailable(glfw)
+        target_link_libraries(GLFWPP INTERFACE glfw)
     endif()
 endif()
 
